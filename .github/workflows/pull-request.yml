@@ -22,8 +22,8 @@ jobs:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
       pull-requests: write
+      contents: write
     steps:
       - uses: actions/checkout@v6
 
@@ -31,43 +31,6 @@ jobs:
         run: gh pr merge --rebase --auto "${{ github.event.pull_request.number }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  prettier-fix:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: jdx/mise-action@v3
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
-
-      - name: Run Prettier Format
-        run: |
-          npx prettier --write . '!.github/workflows/**'
-
-          if [[ -n $(git status --porcelain) ]]; then
-            FIX_BRANCH="fix-${{ github.event.pull_request.number }}-prettier"
-            git switch --create $FIX_BRANCH
-
-            git add --all
-            git commit --message "Auto-fix: Apply Prettier formatting"
-            git push --force origin $FIX_BRANCH
-
-            echo "Prettier formatting fixes have been pushed to the $FIX_BRANCH branch."
-            exit 1
-          else
-            echo "No changes needed by Prettier"
-          fi
 
   biome-fix:
     runs-on: ubuntu-latest
@@ -97,11 +60,48 @@ jobs:
             git switch --create $FIX_BRANCH
 
             git add --all
-            git commit --message "Auto-fix: Apply Biome formatting"
+            git commit --message "Apply Biome formatting."
             git push --force origin $FIX_BRANCH
 
             echo "Biome formatting fixes have been pushed to the $FIX_BRANCH branch."
             exit 1
           else
             echo "No changes needed by Biome"
+          fi
+
+  prettier-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: jdx/mise-action@v3
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Run Prettier Format
+        run: |
+          npx prettier --write . '!.github/workflows/**'
+
+          if [[ -n $(git status --porcelain) ]]; then
+            FIX_BRANCH="fix-${{ github.event.pull_request.number }}-prettier"
+            git switch --create $FIX_BRANCH
+
+            git add --all
+            git commit --message "Apply Prettier formatting."
+            git push --force origin $FIX_BRANCH
+
+            echo "Prettier formatting fixes have been pushed to the $FIX_BRANCH branch."
+            exit 1
+          else
+            echo "No changes needed by Prettier"
           fi
