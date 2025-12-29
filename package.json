@@ -1,9 +1,9 @@
 {
-  "name": "java-template",
-  "private": true,
-  "description": "Java project template with standardized configuration",
-  "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "prettier": "^3.5.3"
-  }
+	"name": "java-template",
+	"private": true,
+	"description": "Java project template with standardized configuration",
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.8",
+		"prettier": "^3.5.3"
+	}
 }
