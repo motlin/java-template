@@ -5,13 +5,16 @@ This template is the source of truth for Java/Maven project configurations.
 ## Managed Tools
 
 ### Mise Tools
+
 Read tool versions from `.mise/config.toml` in this template. Java should use Temurin with full LTS tag format.
 
 ### Maven (pom.xml)
+
 - Plugin versions
 - Dependency management
 
 ### GitHub Workflows
+
 - Auto-fix commit message format
 - CI/CD patterns
 
@@ -26,15 +29,16 @@ Read tool versions from `.mise/config.toml` in this template. Java should use Te
 Read the list of projects from `.llm/projects.yaml`. This file is gitignored so each user can configure their own projects.
 
 Example `.llm/projects.yaml`:
+
 ```yaml
 # Your projects - use Temurin Java with full LTS tag format
 own:
-  - ~/projects/my-project-1
-  - ~/projects/my-project-2
+    - ~/projects/my-project-1
+    - ~/projects/my-project-2
 
 # Forks - keep existing Java vendor (Oracle), only update version numbers
 forks:
-  - ~/projects/some-fork
+    - ~/projects/some-fork
 ```
 
 ## Workflow
@@ -61,11 +65,13 @@ Read `.llm/projects.yaml` and scan each project's `.mise/config.toml`.
 Compare versions - if any project has a newer version, consider pulling it in.
 
 Also check for workflow improvements:
+
 - New auto-fix jobs
 - Better CI patterns
 - Useful justfile recipes
 
 If a project has something better:
+
 1. Verify it's intentional (not a mistake)
 2. Update this template to match
 3. Then push to all other projects
@@ -79,6 +85,7 @@ Use `/markdown-tasks:add-one-task` or the `task_add.py` script from the markdown
 ### Task Templates
 
 **Mise tool update:**
+
 ```
 Update just <current> → <target>
   Edit .mise/config.toml
@@ -87,6 +94,7 @@ Update just <current> → <target>
 ```
 
 **Java version format fix:**
+
 ```
 Fix Java version format
   Edit .mise/config.toml
@@ -96,6 +104,7 @@ Fix Java version format
 ```
 
 **Java vendor migration (own projects only, not forks):**
+
 ```
 Migrate Java vendor oracle → temurin
   Edit .mise/config.toml
@@ -104,6 +113,7 @@ Migrate Java vendor oracle → temurin
 ```
 
 **Auto-fix commit message update:**
+
 ```
 Update auto-fix commit messages (exact replacements)
   Edit .github/workflows/pull-request.yml
@@ -118,13 +128,16 @@ Update auto-fix commit messages (exact replacements)
 After syncing, report:
 
 ### This Template Status
+
 - Current versions in this template
 - Any updates made
 
 ### Improvements Pulled In
+
 - List any newer versions found in siblings
 
 ### Tasks Distributed
+
 - Number of siblings that received tasks
 - Total tasks created
 - Forks handled specially (kept existing Java vendor)

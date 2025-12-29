@@ -6,10 +6,10 @@ A standardized template for Java/Maven projects with pre-configured tooling for 
 
 1. Copy or fork this template
 2. Update `GROUP_ID` in:
-   - `.github/workflows/merge-group.yml`
-   - `.github/workflows/pull-request.yml`
-   - `.github/workflows/push.yml`
-   - `justfile`
+    - `.github/workflows/merge-group.yml`
+    - `.github/workflows/pull-request.yml`
+    - `.github/workflows/push.yml`
+    - `justfile`
 3. Create your `pom.xml`
 4. Run `mise install` to set up tools
 
