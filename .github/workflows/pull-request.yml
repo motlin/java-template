@@ -411,3 +411,59 @@ jobs:
             # Remove any jars we may have created before actions/cache caches .m2
             - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+    errorprone-fix:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  ref: ${{ github.event.pull_request.head.ref }}
+                  repository: ${{ github.event.pull_request.head.repo.full_name }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - uses: actions/cache@v5
+              with:
+                  key: maven-errorprone-${{ hashFiles('**/pom.xml') }}
+                  path: ~/.m2/repository
+                  restore-keys: |
+                      maven-errorprone-
+                      maven-
+
+            - uses: twosigma/maven-cache-cleaner@v1
+
+            - uses: jdx/mise-action@v3
+
+            - name: Configure Git
+              run: |
+                  git config --global user.name "GitHub Actions"
+                  git config --global user.email "github-actions@github.com"
+
+            - name: Run Error Prone
+              run: |
+                  just errorprone-patch
+
+                  find . -name "error-prone.patch" -type f | while read -r patch_file; do
+                    echo "Applying patch file: $patch_file"
+                    patch -p0 -u -i "$patch_file"
+                  done
+
+                  if [[ -n $(git status --porcelain) ]]; then
+                    FIX_BRANCH="fix-${{ github.event.pull_request.number }}-errorprone"
+                    git switch --create $FIX_BRANCH
+
+                    git add --all
+                    git commit --message "Apply Error Prone fixes."
+                    git push --force origin $FIX_BRANCH
+
+                    echo "Error Prone fixes have been pushed to the $FIX_BRANCH branch."
+                    exit 1
+                  else
+                    echo "No changes needed by Error Prone"
+                  fi
+
+            # Remove any jars we may have created before actions/cache caches .m2
+            - name: "Clean Maven cache"
+              run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
