@@ -39,7 +39,20 @@ own:
 # Forks - keep existing Java vendor (Oracle), only update version numbers
 forks:
     - ~/projects/some-fork
+
+# Nested projects within parent projects that also need syncing
+# These are archetypes or templates that generate new projects
+nested:
+    - ~/projects/my-project/my-archetype/src/main/resources/archetype-resources
 ```
+
+### Nested Projects
+
+Nested projects are archetypes or templates embedded within a parent project. They need the same updates as regular projects but have special considerations:
+
+- **Velocity templates**: Workflow files may have `.vm` extension (e.g., `pull-request.yml.vm`)
+- **Variable substitution**: Files may contain `${...}` placeholders - preserve these
+- **Partial structure**: May not have all files (e.g., no `.mise/config.toml` if version comes from parent)
 
 ## Workflow
 
@@ -141,3 +154,4 @@ After syncing, report:
 - Number of siblings that received tasks
 - Total tasks created
 - Forks handled specially (kept existing Java vendor)
+- Nested projects updated (with .vm file handling noted)
