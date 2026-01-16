@@ -9,6 +9,7 @@ import ".just/git.just"
 import ".just/git-test.just"
 
 # `just --list --unsorted`
+[group('default')]
 default:
     @just --list --unsorted
 
