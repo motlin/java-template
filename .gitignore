@@ -1,5 +1,7 @@
-.envrc
-JUSTFILE_BRANCH
+/.claude/
+/.envrc
+/.llm/
+/JUSTFILE_BRANCH
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,intellij+iml,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,intellij+iml,visualstudiocode
@@ -156,6 +158,3 @@ buildNumber.properties
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,intellij+iml,visualstudiocode
-
-# Local config
-.llm/
