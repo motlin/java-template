@@ -20,7 +20,7 @@ Read tool versions from `.mise/config.toml` in this template. Java should use Te
 
 ## Java Version Policy
 
-- **Own projects**: Use Temurin with full LTS tag format (e.g., `temurin-21.0.6+7.0.LTS`)
+- **Own projects**: Use Temurin with full LTS tag format (e.g., `temurin-25.0.2+10.0.LTS`)
 - **Forks**: Keep existing vendor (Oracle), just update version numbers
 - **Never use short versions** like `temurin-21` - always use full LTS tag
 
