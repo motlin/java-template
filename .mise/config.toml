@@ -1,9 +1,9 @@
 [tools]
 java = "temurin-25.0.2+10.0.LTS"
-just = "1.49.0"
+just = "1.51.0"
 maven = "3.9.14"
 mvnd = "1.0.5"
-node = "24.14.1"
+node = "26.2.0"
 "npm:markdownlint-cli" = "0.48.0"
 "npm:prettier" = "3.8.1"
 "npm:strip-ansi-cli" = "4.0.0"
