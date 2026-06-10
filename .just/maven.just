@@ -4,9 +4,9 @@ default_flags    := env('MVN_FLAGS',    "--threads 2C")
 skip_tests_flags := default_flags + " -DskipTests"
 
 default_verify_profiles := env('MVN_VERIFY_PROFILES', "maven-enforcer-plugin")
-default_checkstyle_profiles := env('MVN_CHECKSTYLE_PROFILES', "")
+default_checkstyle_profiles := env('MVN_CHECKSTYLE_PROFILES', "checkstyle-semantics")
 default_spotless_profiles := env('MVN_SPOTLESS_PROFILES', "spotless-apply,spotless-pom")
-default_profiles := env('MVN_PROFILES', "--activate-profiles " + default_verify_profiles + "," + default_spotless_profiles)
+default_profiles := env('MVN_PROFILES', "--activate-profiles " + default_verify_profiles + "," + default_checkstyle_profiles + "," + default_spotless_profiles)
 
 # Run `mvn` with configurable target, profiles, and flags
 [arg("MVN", long="mvn", help="Maven binary to use")]
@@ -57,7 +57,7 @@ compile MVN=default_mvn: (mvn MVN "verify" "" skip_tests_flags)
 
 # `mvn verify` with tests
 [arg("MVN", long="mvn", help="Maven binary to use")]
-test MVN=default_mvn *FLAGS="": (mvn MVN "verify" "" (default_flags + " " + FLAGS))
+test MVN=default_mvn *FLAGS="": (mvn MVN "verify" "--activate-profiles checkstyle-semantics" (default_flags + " " + FLAGS))
 
 # `mvn install`
 [arg("MVN", long="mvn", help="Maven binary to use")]
