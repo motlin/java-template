@@ -21,23 +21,25 @@ Uses [mise](https://mise.jdx.dev/) for tool version management:
 
 ### Formatting
 
-#### JSON/JSONC (`biome.jsonc`)
+#### JSON, JSON5, YAML, Markdown (`vite.config.ts`)
 
-Uses [Biome](https://biomejs.dev/) for JSON formatting:
+Uses [oxfmt](https://oxc.rs/) (via [vite-plus](https://www.npmjs.com/package/vite-plus)'s `vp fmt`)
+for JSON, JSON5, YAML, Markdown, and other non-Java files. Configuration lives in the `fmt`
+block of `vite.config.ts` — oxfmt ignores `.oxfmtrc.json`, so the config must live there.
+This matches `../project-template` and `../typescript-template`.
 
-#### YAML/Markdown (`.prettierrc.json5`)
+Java and `pom.xml` are formatted separately by [Maven Spotless](https://github.com/diffplug/spotless).
+Java formatting uses prettier-plugin-java, whose config lives in `.prettierrc.json5` (read only by
+Spotless — the prettier CLI is no longer used for other file types).
 
-Uses [Prettier](https://prettier.io/) for non-JSON files:
+#### Markdown linting (`.markdownlint.jsonc`, `.markdownlint-cli2.jsonc`)
 
-#### Prettier Ignores (`.prettierignore`)
+Uses [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) for Markdown linting.
+List indentation (4 spaces) is set to match oxfmt's Markdown formatting.
 
-Prettier skips:
+#### YAML linting (`.yamllint.yaml`)
 
-- All JSON/JSONC files (handled by Biome)
-- `pom.xml` (handled by Maven Spotless)
-- `.just` files
-- `.graphqls` files
-- Minified CSS
+Uses [yamllint](https://yamllint.readthedocs.io/) for YAML linting.
 
 ### Pre-commit Hooks (`.pre-commit-config.yaml`)
 
@@ -52,8 +54,8 @@ Prettier skips:
 
 **Formatters:**
 
-- `biome format`
-- `prettier`
+- `vp fmt` (oxfmt) — JSON, JSON5, YAML, Markdown, etc.
+- `markdownlint-cli2` — Markdown linting
 
 ### Git Configuration
 

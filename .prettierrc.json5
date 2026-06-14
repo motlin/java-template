@@ -11,7 +11,7 @@
 	// Default: true
 	semi: true,
 
-	// Use single quotes instead of double quotes
+	// Use double quotes by leaving singleQuote disabled
 	// Default: false
 	singleQuote: false,
 

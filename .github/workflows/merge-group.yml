@@ -49,34 +49,6 @@ jobs:
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - uses: jdx/mise-action@v4
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
-      - name: "Prettier Format Check"
-        run: prettier --check .
-
-  biome:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - uses: jdx/mise-action@v4
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
-      - name: "Biome Format Check"
-        run: npx @biomejs/biome ci
-
   reviewdog-markdownlint:
     runs-on: ubuntu-latest
     steps:
@@ -113,7 +85,7 @@ jobs:
   all-checks:
     name: All checks
     if: ${{ !cancelled() }}
-    needs: [pre-commit, maven-test, prettier, biome, reviewdog-markdownlint, reviewdog-yamllint, reviewdog-actionlint]
+    needs: [pre-commit, maven-test, reviewdog-markdownlint, reviewdog-yamllint, reviewdog-actionlint]
     runs-on: ubuntu-latest
     steps:
       - uses: re-actors/alls-green@release/v1
