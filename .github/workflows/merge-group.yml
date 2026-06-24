@@ -20,6 +20,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+              with:
+                  persist-credentials: false
             - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
               with:
                   python-version: "3.x"
@@ -32,6 +34,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+              with:
+                  persist-credentials: false
 
             - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
               with:
@@ -56,6 +60,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+              with:
+                  persist-credentials: false
 
             - uses: reviewdog/action-markdownlint@e3f417b403e02ddf0bc77760711e73074222369a # v0.27.0
               with:
@@ -67,6 +73,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+              with:
+                  persist-credentials: false
 
             - uses: reviewdog/action-yamllint@7282dd73ebf33fda0581c0aac698a51c16c13f81 # v1.22.0
               with:
@@ -78,6 +86,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+              with:
+                  persist-credentials: false
 
             - uses: reviewdog/action-actionlint@be0761e4c1bab7cfdfca56cd03d4bb6253e39a4a # v1.72.0
               with:
