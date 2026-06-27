@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-    contents: read
+  contents: read
 
 env:
   # TODO: Update this to match your project's Maven group ID with slashes
