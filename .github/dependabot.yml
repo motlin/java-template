@@ -8,6 +8,8 @@ updates:
           timezone: America/New_York
       open-pull-requests-limit: 99
       target-branch: main
+      cooldown:
+          default-days: 1
       groups:
           openrewrite:
               patterns:
@@ -42,3 +44,5 @@ updates:
           timezone: America/New_York
       open-pull-requests-limit: 99
       target-branch: main
+      cooldown:
+          default-days: 1
