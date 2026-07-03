@@ -22,7 +22,7 @@ mise:
 @clean: _clean-git _clean-maven _clean-m2
 
 # Run all formatting tools for pre-commit
-precommit: mvn
+verify: mvn
 
 # Override this with a command called `woof` which notifies you in whatever ways you prefer.
 # My `woof` command uses `echo`, `say`, and sends a Pushover notification.
