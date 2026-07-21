@@ -1,10 +1,10 @@
 version: 2
 updates:
-    - package-ecosystem: 'maven'
-      directory: '/'
+    - package-ecosystem: "maven"
+      directory: "/"
       schedule:
-          interval: 'daily'
-          time: '07:00'
+          interval: "daily"
+          time: "07:00"
           timezone: America/New_York
       open-pull-requests-limit: 99
       target-branch: main
@@ -13,34 +13,34 @@ updates:
       groups:
           openrewrite:
               patterns:
-                  - 'org.openrewrite*'
+                  - "org.openrewrite*"
           jackson:
               patterns:
-                  - 'com.fasterxml.jackson*'
+                  - "com.fasterxml.jackson*"
           error-prone:
               patterns:
-                  - 'com.google.errorprone*'
-                  - 'tech.picnic.error-prone-support*'
+                  - "com.google.errorprone*"
+                  - "tech.picnic.error-prone-support*"
           junit:
               patterns:
-                  - 'org.junit*'
+                  - "org.junit*"
           dropwizard:
               patterns:
-                  - 'io.dropwizard*'
+                  - "io.dropwizard*"
           slf4j:
               patterns:
-                  - 'org.slf4j*'
+                  - "org.slf4j*"
           logback:
               patterns:
-                  - 'ch.qos.logback*'
+                  - "ch.qos.logback*"
           logstash-logback:
               patterns:
-                  - 'net.logstash.logback*'
-    - package-ecosystem: 'github-actions'
-      directory: '/'
+                  - "net.logstash.logback*"
+    - package-ecosystem: "github-actions"
+      directory: "/"
       schedule:
-          interval: 'daily'
-          time: '07:00'
+          interval: "daily"
+          time: "07:00"
           timezone: America/New_York
       open-pull-requests-limit: 99
       target-branch: main
