@@ -27,7 +27,7 @@ Uses [mise](https://mise.jdx.dev/) for tool version management:
 
 Uses [oxfmt](https://oxc.rs/) (via [vite-plus](https://www.npmjs.com/package/vite-plus)'s `vp fmt`) for JSON, JSON5, YAML, Markdown, and other non-Java files. Configuration lives in the `fmt` block of `vite.config.ts` — oxfmt ignores `.oxfmtrc.json`, so the config must live there. This matches `../project-template` and `../typescript-template`.
 
-Java and `pom.xml` are formatted separately by [Maven Spotless](https://github.com/diffplug/spotless). Java formatting uses prettier-plugin-java, whose config lives in `.prettierrc.json5` (read only by Spotless — the prettier CLI is no longer used for other file types).
+Java and `pom.xml` are formatted separately by [Maven Spotless](https://github.com/diffplug/spotless). Java formatting uses prettier-java-next-line with prettier-next-line as its host, whose config lives in `.prettierrc.json5` (read only by Spotless — the prettier CLI is no longer used for other file types).
 
 #### Markdown linting (`.markdownlint.jsonc`, `.markdownlint-cli2.jsonc`)
 
