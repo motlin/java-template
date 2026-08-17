@@ -11,6 +11,8 @@ Template path: !`pwd`
 
 ## Managed files
 
+- `scripts/audit-just-options.py` — repository-wide `just` option policy audit
+
 ### Mise tools
 
 Read tool versions from `.mise/config.toml` in this template. Java should use Temurin with full LTS tag format.
@@ -80,6 +82,10 @@ Nested projects are archetypes or templates embedded within a parent project. Th
 
 @.claude/includes/sync-git-test.md
 
+## Just recipe options
+
+@.claude/includes/sync-just-options.md
+
 ## Workflow
 
 Work through these in order:
@@ -88,6 +94,7 @@ Work through these in order:
 - **Pull from projects.** Read `.llm/projects.yaml` and scan each project's `.mise/config.toml` and workflows. If any project has a newer version, a new auto-fix job, a better CI pattern, or a useful justfile recipe, verify it is intentional, update this template, then push to the others.
 - **Scan for stale configs.** For each project, run the stale-config scan above before generating tooling tasks. Alert on findings; do not delete.
 - **Scan ignore files.** For each project, run the `.gitignore` / `.git/info/exclude` scan above. Promote per-clone excludes every peer needs; question only hand-added dead entries. Alert on findings; do not edit either file.
+- **Audit recipe options.** Run the shared `just` option audit against each project and create one project-scoped task for every failure.
 - **Generate tasks.** For each project, compare against this template and write tasks into its `.llm/todo.md` for any mismatches. Handle forks specially (keep existing Java vendor) and note `.vm` file handling for nested projects.
 
 ## Creating tasks
