@@ -37,14 +37,14 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-
 
-      - uses: twosigma/maven-cache-cleaner@8cc87ff622d543e1aad4085cbf5c05236b2d16d9 # v2
+      - uses: twosigma/maven-cache-cleaner@8cc87ff622d543e1aad4085cbf5c05236b2d16d9 # v2.3.0
 
       - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         env:
@@ -58,6 +58,9 @@ jobs:
 
   reviewdog-markdownlint:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -71,6 +74,9 @@ jobs:
 
   reviewdog-yamllint:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -84,6 +90,9 @@ jobs:
 
   reviewdog-actionlint:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -95,10 +104,26 @@ jobs:
           fail_on_error: true
           filter_mode: nofilter
 
+  reviewdog-shellcheck:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - uses: reviewdog/action-shellcheck@3cc162a8c30b193fe8059889b47b2732c4d7010c # v1.33.0
+        with:
+          reporter: github-pr-check
+          filter_mode: nofilter
+
   all-checks:
     name: All checks
     if: ${{ !cancelled() }}
-    needs: [pre-commit, maven-test, reviewdog-markdownlint, reviewdog-yamllint, reviewdog-actionlint]
+    needs:
+      [pre-commit, maven-test, reviewdog-markdownlint, reviewdog-yamllint, reviewdog-actionlint, reviewdog-shellcheck]
     runs-on: ubuntu-latest
     steps:
       - uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # release/v1
