@@ -1,7 +1,7 @@
 # set up `git-test`
 setup-git-test:
     # Combined
-    git test add --forget --test default                      'just clean _check-local-modifications verify'
+    git test add --forget --test default                      'just --global-justfile _check-local-modifications && (should-skip-commit || just verify) && just --global-justfile _check-local-modifications'
     git test add --forget --test checkstyle                   'just clean _check-local-modifications checkstyle'
     git test add --forget --test spotless-all                 'just clean _check-local-modifications spotless-all'
     # Individual
