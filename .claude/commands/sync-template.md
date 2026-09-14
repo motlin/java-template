@@ -64,6 +64,10 @@ Nested projects are archetypes or templates embedded within a parent project. Th
 
 @.claude/includes/sync-stale-configs.md
 
+## Git ignore files
+
+@.claude/includes/sync-gitignore.md
+
 ## Default git test
 
 @.claude/includes/sync-git-test.md
@@ -75,6 +79,7 @@ Work through these in order:
 - **Refresh the template.** Run the version checks above; if this template is behind, update it first.
 - **Pull from projects.** Read `.llm/projects.yaml` and scan each project's `.mise/config.toml` and workflows. If any project has a newer version, a new auto-fix job, a better CI pattern, or a useful justfile recipe, verify it is intentional, update this template, then push to the others.
 - **Scan for stale configs.** For each project, run the stale-config scan above before generating tooling tasks. Alert on findings; do not delete.
+- **Scan ignore files.** For each project, run the `.gitignore` / `.git/info/exclude` scan above. Promote per-clone excludes every peer needs; question only hand-added dead entries. Alert on findings; do not edit either file.
 - **Generate tasks.** For each project, compare against this template and write tasks into its `.llm/todo.md` for any mismatches. Handle forks specially (keep existing Java vendor) and note `.vm` file handling for nested projects.
 
 ## Creating tasks
