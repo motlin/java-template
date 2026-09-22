@@ -25,6 +25,14 @@ Read tool versions from `.mise/config.toml` in this template. Java should use Te
 - Auto-fix commit message format
 - CI/CD patterns
 
+### Maven Central signing
+
+For publishing workflows that import a key with `actions/setup-java`, explicitly set `gpg-passphrase-env-var: MAVEN_GPG_PASSPHRASE` in the action's `with` block and supply `MAVEN_GPG_PASSPHRASE` from the existing passphrase secret in the Maven publish step's `env` block. Preserve each project's secret name.
+
+setup-java 6 defaults to `GPG_PASSPHRASE` and overrides Maven GPG Plugin's default variable name through `gpg.passphraseEnvName`. Supplying only `MAVEN_GPG_PASSPHRASE` without the matching action input therefore breaks signing. For older setup-java versions without `gpg-passphrase-env-var`, use the existing `gpg-passphrase: MAVEN_GPG_PASSPHRASE` input instead.
+
+Check publishing workflows in all configured projects and nested templates. Do not add publishing workflows to projects that do not already publish artifacts.
+
 ### Java version policy
 
 - **Own projects**: Use Temurin with full LTS tag format (e.g., `temurin-25.0.2+10.0.LTS`)
