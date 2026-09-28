@@ -1,5 +1,3 @@
-set dotenv-filename := ".envrc"
-
 # TODO: Update this to match your project's Maven group ID with slashes
 group_id_with_slashes := "com/example"
 
