@@ -1,4 +1,5 @@
 {
 	"name": "java-template",
-	"private": true
+	"private": true,
+	"packageManager": "pnpm@12.6.0"
 }

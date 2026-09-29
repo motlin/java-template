@@ -13,8 +13,7 @@ Template path: !`pwd`
 
 ### Mise tools
 
-Read tool versions from `.mise/config.toml` in this template. Java should use Temurin
-with full LTS tag format.
+Read tool versions from `.mise/config.toml` in this template. Java should use Temurin with full LTS tag format.
 
 ### Maven (pom.xml)
 
@@ -55,8 +54,7 @@ mise ls-remote java | grep '^temurin-25\.' | tail -1
 
 ### Nested projects
 
-Nested projects are archetypes or templates embedded within a parent project. They
-need the same updates as regular projects but have special considerations:
+Nested projects are archetypes or templates embedded within a parent project. They need the same updates as regular projects but have special considerations:
 
 - **Velocity templates**: Workflow files may have `.vm` extension (e.g., `pull-request.yml.vm`)
 - **Variable substitution**: Files may contain `${...}` placeholders - preserve these
@@ -72,17 +70,12 @@ need the same updates as regular projects but have special considerations:
 
 ## Workflow
 
-1. **Refresh the template.** Run the version checks above; if this template is
-   behind, update it first.
-2. **Pull from projects.** Read `.llm/projects.yaml` and scan each project's
-   `.mise/config.toml` and workflows. If any project has a newer version, a new
-   auto-fix job, a better CI pattern, or a useful justfile recipe, verify it is
-   intentional, update this template, then push to the others.
-3. **Scan for stale configs.** For each project, run the stale-config scan above
-   before generating tooling tasks. Alert on findings; do not delete.
-4. **Generate tasks.** For each project, compare against this template and write
-   tasks into its `.llm/todo.md` for any mismatches. Handle forks specially (keep
-   existing Java vendor) and note `.vm` file handling for nested projects.
+Work through these in order:
+
+- **Refresh the template.** Run the version checks above; if this template is behind, update it first.
+- **Pull from projects.** Read `.llm/projects.yaml` and scan each project's `.mise/config.toml` and workflows. If any project has a newer version, a new auto-fix job, a better CI pattern, or a useful justfile recipe, verify it is intentional, update this template, then push to the others.
+- **Scan for stale configs.** For each project, run the stale-config scan above before generating tooling tasks. Alert on findings; do not delete.
+- **Generate tasks.** For each project, compare against this template and write tasks into its `.llm/todo.md` for any mismatches. Handle forks specially (keep existing Java vendor) and note `.vm` file handling for nested projects.
 
 ## Creating tasks
 
