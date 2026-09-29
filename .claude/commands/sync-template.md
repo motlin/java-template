@@ -101,7 +101,7 @@ Work through these in order:
 
 @.claude/includes/sync-task-dedup.md
 
-Marker for this template: `Source: ~/projects/java-template`
+Marker for this template: `Source: java-template`
 
 ### Task templates
 
@@ -112,7 +112,7 @@ Update just <current> → <target>
   Edit .mise/config.toml
   Change: just = "<current>"
   To: just = "<target>"
-  Source: ~/projects/java-template
+  Source: java-template
 ```
 
 **Java version format fix:**
@@ -123,7 +123,7 @@ Fix Java version format
   Change: java = "temurin-21"
   To: java = "temurin-21.0.9+10.0.LTS"
   Note: Always use full LTS tag format
-  Source: ~/projects/java-template
+  Source: java-template
 ```
 
 **Java vendor migration (own projects only, not forks):**
@@ -133,7 +133,7 @@ Migrate Java vendor oracle → temurin
   Edit .mise/config.toml
   Change: java = "oracle-17.0.10"
   To: java = "temurin-17.0.17+10.0.LTS"
-  Source: ~/projects/java-template
+  Source: java-template
 ```
 
 **Auto-fix commit message update:**
@@ -145,7 +145,7 @@ Update auto-fix commit messages (exact replacements)
   "Auto-fix: Apply Spotless POM formatting" → "Apply Spotless POM formatting."
   "Auto-fix: Apply Spotless Prettier Java with Sorted Imports" → "Apply Spotless Prettier Java with Sorted Imports auto-formatting."
   ...etc
-  Source: ~/projects/java-template
+  Source: java-template
 ```
 
 ## Report
