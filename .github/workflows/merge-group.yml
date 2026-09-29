@@ -114,7 +114,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: reviewdog/action-shellcheck@3cc162a8c30b193fe8059889b47b2732c4d7010c # v1.33.0
+      - uses: reviewdog/action-shellcheck@0a90156c6e0553996a217f0a9e09be6b0f6bee4c # v1.34.0
         with:
           reporter: github-pr-check
           filter_mode: nofilter
