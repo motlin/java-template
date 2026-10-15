@@ -5,6 +5,8 @@ maven = "3.9.16"
 mvnd = "1.0.6"
 node = "24.21.0"
 pre-commit = "4.6.2"
+# pre-commit and its hooks run on Python, so pin it even though this is not a Python project.
+python = "3.15.0"
 "npm:markdownlint-cli2" = "0.23.3"
 "npm:prettier" = "3.9.10"
 "npm:prettier-java-next-line" = { version = "2.11.0", allow_low_downloads = true }
