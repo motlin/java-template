@@ -23,9 +23,9 @@ Uses [mise](https://mise.jdx.dev/) for tool version management:
 
 ### Formatting
 
-#### JSON, JSON5, YAML, Markdown (`vite.config.ts`)
+#### JSON, JSON5, YAML, Markdown (`.oxfmtrc.json`)
 
-Uses [oxfmt](https://oxc.rs/) (via [vite-plus](https://www.npmjs.com/package/vite-plus)'s `vp fmt`) for JSON, JSON5, YAML, Markdown, and other non-Java files. Configuration lives in the `fmt` block of `vite.config.ts` — oxfmt ignores `.oxfmtrc.json`, so the config must live there. This matches `../project-template` and `../typescript-template`.
+Uses [oxfmt-next-line](https://www.npmjs.com/package/oxfmt-next-line), a fork of [oxfmt](https://oxc.rs/) that puts opening braces on their own line, for JSON, JSON5, YAML, Markdown, and other non-Java files. Configuration lives in `.oxfmtrc.json`, and mise installs the formatter, so it works without `node_modules`. This matches `../project-template`.
 
 Java and `pom.xml` are formatted separately by [Maven Spotless](https://github.com/diffplug/spotless). Java formatting uses prettier-java-next-line with prettier-next-line as its host, whose config lives in `.prettierrc.json5` (read only by Spotless — the prettier CLI is no longer used for other file types).
 
@@ -50,7 +50,7 @@ Uses [yamllint](https://yamllint.readthedocs.io/) for YAML linting.
 
 **Formatters:**
 
-- `vp fmt` (oxfmt) — JSON, JSON5, YAML, Markdown, etc.
+- `oxfmt-next-line` — JSON, JSON5, YAML, Markdown, etc.
 - `markdownlint-cli2` — Markdown linting
 
 ### Git Configuration
