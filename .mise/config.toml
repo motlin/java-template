@@ -11,7 +11,7 @@ python = "3.15.0"
 "npm:prettier" = "3.9.10"
 "npm:prettier-java-next-line" = { version = "2.11.0", allow_low_downloads = true }
 "npm:strip-ansi-cli" = "4.0.0"
-"npm:vite-plus" = "0.3.3"
+"npm:oxfmt-next-line" = { version = "0.75.0", allow_low_downloads = true }
 
 [tool_alias]
 mvnd = "asdf:https://github.com/joschi/asdf-mvnd"
