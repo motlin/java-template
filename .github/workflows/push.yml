@@ -17,6 +17,7 @@ env:
   GROUP_ID: "com/example"
 
 jobs:
+  # Saves the Maven cache that every pull request and merge queue job restores. Those runs can only restore caches saved on main, so they never save their own. On a cache miss, the warm-up step runs the goals and profiles that only those jobs use, so the cache holds every plugin and plugin dependency they need. The key hashes this file so that changing the warm-up saves a fresh cache.
   maven:
     runs-on: ubuntu-latest
     steps:
@@ -25,11 +26,12 @@ jobs:
           persist-credentials: false
 
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: maven-cache
         with:
-          key: maven-${{ hashFiles('**/pom.xml') }}
+          key: maven-main-${{ hashFiles('**/pom.xml', '.github/workflows/push.yml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-
+            maven-main-
 
       - uses: twosigma/maven-cache-cleaner@fbb04c12bb496d3c4f1818eb235dbb5114b227c6 # v2.4.0
 
@@ -38,6 +40,48 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - run: just mvn
+
+      # `just mvn` already covers the tests and the spotless-pom, enforcer, and checkstyle-semantics profiles.
+      - name: Warm up the plugins of the other pull request and merge queue jobs
+        if: steps.maven-cache.outputs.cache-hit != 'true'
+        run: just mvn --target verify --profiles="--activate-profiles errorprone-patch,spotless-apply,spotless-formats,spotless-java,spotless-java-cleanthat" -- --threads 2C -DskipTests
+
+      # Remove any jars we may have created before actions/cache caches .m2
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+  # Saves the rewrite jobs' Maven cache on main, the only branch whose caches every pull request run can restore. When the cache already exists, this job only restores it.
+  openrewrite-recipes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: maven-cache
+        with:
+          # Not prefixed with maven-main- so that the other jobs' maven-main- fallback never restores artifacts cached as coming from codegenome, which Maven rechecks against Central in builds without that repository.
+          key: codegenome-maven-rewrite-main-${{ hashFiles('**/pom.xml', '.github/workflows/push.yml') }}
+          path: ~/.m2/repository
+          restore-keys: |
+            codegenome-maven-rewrite-main-
+            maven-main-
+
+      - uses: twosigma/maven-cache-cleaner@fbb04c12bb496d3c4f1818eb235dbb5114b227c6 # v2.4.0
+
+      - uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@afc6d6a5a60e4f841bc419b0f855d90614cbe86b # main
+        with:
+          codegenome-username: ${{ secrets.CODEGENOME_USERNAME }}
+          codegenome-token: ${{ secrets.CODEGENOME_TOKEN }}
+
+      - name: Warm up the plugins of the rewrite job
+        if: steps.maven-cache.outputs.cache-hit != 'true'
+        run: just rewrite-run
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"

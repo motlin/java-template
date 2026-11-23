@@ -20,7 +20,11 @@ mise:
 @clean: _clean-git _clean-maven _clean-m2
 
 # Run all formatting tools for pre-commit
-verify: mvn
+verify: test-workflows mvn
+
+# `node --test` for the GitHub workflows
+test-workflows:
+    node --test .github/*.test.mjs
 
 # Audit public singular recipe parameters for documented options
 audit-just-options:

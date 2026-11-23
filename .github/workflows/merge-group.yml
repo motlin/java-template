@@ -11,10 +11,6 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  # TODO: Update this to match your project's Maven group ID with slashes
-  GROUP_ID: "com/example"
-
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -37,24 +33,20 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          key: maven-${{ hashFiles('**/pom.xml') }}
+          key: maven-main-${{ hashFiles('**/pom.xml', '.github/workflows/push.yml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-
-
-      - uses: twosigma/maven-cache-cleaner@fbb04c12bb496d3c4f1818eb235dbb5114b227c6 # v2.4.0
+            maven-main-
 
       - uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - run: just test
+      - run: just test-workflows
 
-      # Remove any jars we may have created before actions/cache caches .m2
-      - name: "Clean Maven cache"
-        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+      - run: just test
 
   reviewdog-markdownlint:
     runs-on: ubuntu-latest
